@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+
+  nginx:
+    container_name: nginx-gateway
+    build: ./nginx-gateway/
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - report-service
+    links:
+      - report-service
+    restart: always #unless-stopped
+
+  report-service:
+    container_name: report-service
+    build:
+        context: ./report-service
+        dockerfile: Dockerfile
+    volumes:
+      - './report-service:/usr/src/app'
+    ports:
+      - 5001:5000 # expose ports - HOST:CONTAINER
+    restart: always #unless-stopped

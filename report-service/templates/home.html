@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ipl stats</title>
+</head>
+<body>
+<h2>IPL Stats</h2>
+
+
+<form action="">
+    Season: <select name="season" id="">
+        <option>Choose a season</option>
+        {% for season in all_seasons %}
+            <option value="{{season}}" {% if season == chosen_season %}selected{% endif %}>{{season}}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">show</button>
+</form>
+
+{% if chosen_season %}
+    <div>
+        <h4>1. Top 4 teams in terms of wins</h4>
+        <div>
+            <ol>
+                {% for team, wins in top_4_teams.iteritems() %}
+                    <li>{{team}} - {{wins}} wins</li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+
+    <div>
+        <h4>2. Most number of toss wins</h4>
+        <div>
+            {% for team, wins in most_toss_wins.iteritems() %}
+                {{team}} - {{wins}} wins
+            {% endfor %}
+        </div>
+    </div>
+
+    <div>
+        <h4>3. Maximum number of Player of the Match</h4>
+        <div>
+            {% for player, wins in most_man_of_the_match.iteritems() %}
+                {{player}} - {{wins}} wins
+            {% endfor %}
+        </div>
+    </div>
+
+    <div>
+        <h4>4. Highest no. of match wins</h4>
+        <div>
+            {% for team, wins in max_match_wins.iteritems() %}
+                {{team}} - {{wins}} wins
+            {% endfor %}
+        </div>
+    </div>
+
+    <div>
+        <h4>5. Location has the most number of wins for the top team</h4>
+        <div>
+            {% for team, wins in top_team_wins_by_location.iteritems() %}
+                {{team[0]}} won {{wins}} matches at {{team[1]}}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div>
+        <h4>6. Teams decided to bat when they won the toss</h4>
+        <div>
+            {% for key, wins in percentage_toss_decisions.iteritems() %}
+                {% if key %}
+                    {{wins}}% of teams win when decided to bat first.
+                {% endif %}
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <div>
+        <h4>7. Location hosted most number of matches.</h4>
+        <div>
+            {% for venue, total in location_hosted_max_matches.iteritems() %}
+                {{venue}} - {{total}} matches
+            {% endfor %}
+        </div>
+    </div>
+
+    <div>
+        <h4>8. Team won by the highest margin of runs for the season</h4>
+        <div>
+        {% for team, margin in won_by_highest_margin.iteritems() %}
+            {{team}} - {{margin}}
+        {% endfor %}
+
+        </div>
+    </div>
+{% endif %}
+
+</body>
+</html>
